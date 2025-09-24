@@ -1,0 +1,19 @@
+---
+import Navbar from "../components/Navbar.astro";
+import Welcome from "../components/Welcome.astro";
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout>
+  <div class="h-screen">
+    <div class="h-1/4">
+      <Navbar />
+    </div>
+    <div class="h-2/4">
+      <Welcome />
+    </div>
+    <div class="h-1/4">
+      <p>hello</p>
+    </div>
+  </div>
+</Layout>

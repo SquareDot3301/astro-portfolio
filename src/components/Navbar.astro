@@ -1,0 +1,42 @@
+---
+import { Image } from "astro:assets";
+import myLogo from "../assets/logo.png";
+---
+
+<div class="flex justify-center items-center h-full">
+  <div
+    class="flex items-center bg-white w-fit p-3 rounded-xl font-sans text-lg lg:text-xl xl:text-2xl"
+  >
+    <a class="relative group px-2" href="/about">
+      About
+      <span
+        class="absolute left-0 -bottom-1 h-1 w-0 bg-pink transition-all duration-300 group-hover:w-full"
+      ></span>
+    </a>
+    <a class="relative group px-2" href="/projects">
+      Projects
+      <span
+        class="absolute left-0 -bottom-1 h-1 w-0 bg-pink transition-all duration-300 group-hover:w-full"
+      ></span>
+    </a>
+    <a href="/">
+      <Image
+        src={myLogo}
+        class="h-14 lg:h-24 w-14 lg:w-24 mx-2 lg:mx-4"
+        alt="Logo du site"
+      />
+    </a>
+    <a class="relative group px-2" href="/contact">
+      Contact
+      <span
+        class="absolute left-0 -bottom-1 h-1 w-0 bg-pink transition-all duration-300 group-hover:w-full"
+      ></span>
+    </a>
+    <a class="relative group px-2" href="/blog">
+      My Blog
+      <span
+        class="absolute left-0 -bottom-1 h-1 w-0 bg-pink transition-all duration-300 group-hover:w-full"
+      ></span>
+    </a>
+  </div>
+</div>

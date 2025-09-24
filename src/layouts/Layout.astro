@@ -1,0 +1,37 @@
+---
+import "../styles/global.css";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{import.meta.env.WEBSITE}</title>
+  </head>
+  <body class="bg-bg-color">
+    <div class="min-h-screen w-full relative">
+      {/* Radial Gradient Background from Bottom */}
+      <div
+        class="absolute inset-0 z-0"
+        style={{
+          background:
+            "radial-gradient(125% 125% at 50% 90%, #6f00ff 10%, #3b0270 100%)",
+        }}
+      >
+        <slot />
+      </div>
+    </div>
+  </body>
+</html>
+
+<style>
+  html,
+  body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+  }
+</style>

@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "HurmitNerdFont";
+  src: url("/fonts/HurmitNerdFontMono-Regular.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme inline {
+  --font-sans: "HurmitNerdFont", "sans-serif";
+  --color-bg-color: #3b0270;
+  --color-blue: #6f00ff;
+  --color-pink: #e9b3fb;
+  --color-text: #fff1f1;
+}
