@@ -7,7 +7,7 @@ import tailwindcss from "@tailwindcss/vite";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "test.quetzer.land",
+  site: "http://test.quetzer.land",
   integrations: [react()],
 
   server: { allowedHosts: ["test.quetzer.land"] },
