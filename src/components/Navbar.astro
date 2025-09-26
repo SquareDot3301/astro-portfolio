@@ -1,42 +1,148 @@
 ---
 import { Image } from "astro:assets";
-import myLogo from "../assets/logo.png";
+import myLogo from "../assets/avatar.svg";
 ---
 
-<div class="flex justify-center items-center h-full">
-  <div
-    class="flex items-center bg-white w-fit p-3 rounded-xl font-sans text-lg lg:text-xl xl:text-2xl"
-  >
-    <a class="relative group px-2" href="/about">
-      About
-      <span
-        class="absolute left-0 -bottom-1 h-1 w-0 bg-pink transition-all duration-300 group-hover:w-full"
-      ></span>
-    </a>
-    <a class="relative group px-2" href="/projects">
-      Projects
-      <span
-        class="absolute left-0 -bottom-1 h-1 w-0 bg-pink transition-all duration-300 group-hover:w-full"
-      ></span>
-    </a>
-    <a href="/">
-      <Image
-        src={myLogo}
-        class="h-14 lg:h-24 w-14 lg:w-24 mx-2 lg:mx-4"
-        alt="Logo du site"
-      />
-    </a>
-    <a class="relative group px-2" href="/contact">
-      Contact
-      <span
-        class="absolute left-0 -bottom-1 h-1 w-0 bg-pink transition-all duration-300 group-hover:w-full"
-      ></span>
-    </a>
-    <a class="relative group px-2" href="/blog">
-      My Blog
-      <span
-        class="absolute left-0 -bottom-1 h-1 w-0 bg-pink transition-all duration-300 group-hover:w-full"
-      ></span>
-    </a>
+<nav class="w-full">
+  <div class="max-w-6xl mx-auto px-4 overflow-visible">
+    <!-- Conteneur principal : on enlève la hauteur fixe et on met du padding vertical -->
+    <div class="relative flex items-center justify-center py-4 md:py-5">
+      <!-- Pill blanche (desktop) : centré grâce à mx-auto et visible seulement >= md -->
+      <div
+        class="hidden md:inline-flex items-center bg-white p-3 rounded-xl font-sans text-lg lg:text-xl xl:text-2xl space-x-6 mx-auto"
+      >
+        <!-- Left links -->
+        <div class="flex items-center space-x-4">
+          <a class="relative group px-2" href="/about">
+            About
+            <span
+              class="absolute left-0 -bottom-1 h-1 w-0 bg-pink transition-all duration-300 group-hover:w-full"
+            ></span>
+          </a>
+
+          <a class="relative group pl-2" href="/projects">
+            Projects
+            <span
+              class="absolute left-0 -bottom-1 h-1 w-0 bg-pink transition-all duration-300 group-hover:w-full"
+            ></span>
+          </a>
+        </div>
+
+        <!-- Logo (au centre de la pill) -->
+        <a href="/" class="mr-2">
+          <Image
+            src={myLogo}
+            class="h-14 lg:h-24 w-14 lg:w-24"
+            alt="Logo du site"
+            loading={"eager"}
+          />
+        </a>
+
+        <!-- Right links -->
+        <div class="flex items-center space-x-4">
+          <a class="relative group px-2" href="/contact">
+            Contact
+            <span
+              class="absolute left-0 -bottom-1 h-1 w-0 bg-pink transition-all duration-300 group-hover:w-full"
+            ></span>
+          </a>
+
+          <a class="relative group px-2" href="/blog">
+            My Blog
+            <span
+              class="absolute left-0 -bottom-1 h-1 w-0 bg-pink transition-all duration-300 group-hover:w-full"
+            ></span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Logo mobile : centré verticalement & horizontalement dans le conteneur -->
+      <a href="/" class="md:hidden mx-auto">
+        <Image src={myLogo} class="h-24 w-24" alt="Logo du site" />
+      </a>
+
+      <!-- Bouton menu mobile (à droite) -->
+      <button
+        id="menu-btn"
+        class="md:hidden absolute right-0 p-2"
+        aria-label="Toggle menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <span class="block w-6 h-0.5 bg-white mb-1"></span>
+        <span class="block w-6 h-0.5 bg-white mb-1"></span>
+        <span class="block w-6 h-0.5 bg-white"></span>
+      </button>
+    </div>
+
+    <!-- Dropdown mobile : positionné sous le conteneur, centré -->
+    <div
+      id="mobile-menu"
+      class="hidden absolute left-1/2 transform -translate-x-1/2 mt-2 w-[90%] sm:w-3/4 bg-white rounded-xl p-4 flex flex-col items-center z-50 shadow-lg"
+    >
+      <a class="relative group w-full text-center py-2" href="/about">
+        About
+        <span
+          class="absolute left-1/2 -translate-x-1/2 -bottom-1 h-1 w-0 bg-pink transition-all duration-300 group-hover:w-3/4"
+        ></span>
+      </a>
+
+      <a class="relative group w-full text-center py-2" href="/projects">
+        Projects
+        <span
+          class="absolute left-1/2 -translate-x-1/2 -bottom-1 h-1 w-0 bg-pink transition-all duration-300 group-hover:w-3/4"
+        ></span>
+      </a>
+
+      <a class="relative group w-full text-center py-2" href="/contact">
+        Contact
+        <span
+          class="absolute left-1/2 -translate-x-1/2 -bottom-1 h-1 w-0 bg-pink transition-all duration-300 group-hover:w-3/4"
+        ></span>
+      </a>
+
+      <a class="relative group w-full text-center py-2" href="/blog">
+        My Blog
+        <span
+          class="absolute left-1/2 -translate-x-1/2 -bottom-1 h-1 w-0 bg-pink transition-all duration-300 group-hover:w-3/4"
+        ></span>
+      </a>
+    </div>
   </div>
-</div>
+</nav>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const btn = document.getElementById("menu-btn");
+    const menu = document.getElementById("mobile-menu");
+    if (!btn || !menu) return;
+
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const opened = btn.getAttribute("aria-expanded") === "true";
+      btn.setAttribute("aria-expanded", String(!opened));
+      menu.classList.toggle("hidden");
+    });
+
+    document.addEventListener("click", (ev) => {
+      const target = ev.target;
+      if (!(target instanceof Node)) return; // garde-fou
+
+      if (
+        !menu.classList.contains("hidden") &&
+        !menu.contains(target) &&
+        !btn.contains(target)
+      ) {
+        menu.classList.add("hidden");
+        btn.setAttribute("aria-expanded", "false");
+      }
+    });
+
+    document.addEventListener("keydown", (ev) => {
+      if (ev.key === "Escape" && !menu.classList.contains("hidden")) {
+        menu.classList.add("hidden");
+        btn.setAttribute("aria-expanded", "false");
+      }
+    });
+  });
+</script>
