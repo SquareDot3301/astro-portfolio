@@ -7,10 +7,10 @@ import tailwindcss from "@tailwindcss/vite";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "http://test.quetzer.land",
+  site: "https://richalguemei.fr",
   integrations: [react()],
 
-  server: { allowedHosts: ["test.quetzer.land"] },
+  server: { allowedHosts: ["richalguemei.fr"] },
 
   vite: {
     plugins: [tailwindcss()],

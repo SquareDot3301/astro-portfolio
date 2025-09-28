@@ -31,4 +31,14 @@
     1px 15px 1px #fff1f1, 1px 16px 1px #fff1f1, 1px 17px 1px #fff1f1,
     1px 18px 1px #fff1f1, 1px 18px 1px #fff1f1, 1px 19px 1px #fff1f1,
     1px 20px 1px #fff1f1;
+
+  --animate-fadein: fadein 1s ease-out forwards;
+  @keyframes fadein {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 100;
+    }
+  }
 }

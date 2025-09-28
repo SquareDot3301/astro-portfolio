@@ -4,13 +4,24 @@ import Layout from "../layouts/Layout.astro";
 import Footer from "../components/Footer.astro";
 ---
 
-<Layout>
+<Layout
+  title="404 Perdu !"
+  description={import.meta.env.DESCRIPTION}
+  url="/?"
+  index="noindex"
+>
   <div class="h-screen">
     <div class="h-1/4">
       <Navbar />
     </div>
-    <div class="h-2/4">
-      <p>Oups ! Vous vous êtes perdus</p>
+    <div class="h-2/4 flex flex-1 flex-col justify-center items-center">
+      <h1 class="text-text text-6xl font-creative">
+        Oups ! Vous vous êtes perdus
+      </h1>
+      <a
+        class="p-2 sm:p-3 md:p-5 bg-text rounded-4xl my-10 text-xl lg:text-3xl font-sans duration-200 hover:bg-pink"
+        href="/">Retour à l'accueil</a
+      >
     </div>
     <div class="h-1/4">
       <Footer />

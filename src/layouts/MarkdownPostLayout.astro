@@ -1,0 +1,93 @@
+---
+import "../styles/global.css";
+const { frontmatter } = Astro.props;
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+
+const datePost = new Date(frontmatter.pubDate);
+---
+
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/avatar-bg.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{frontmatter.title}</title>
+    <link rel="me" href="https://mastodon.social/@richalguemei" />
+    <meta name="fediverse:creator" content="@richalguemei@mastodon.social" />
+    <meta name="description" content={frontmatter.description} />
+    <meta name="googlebot-news" content="index, follow" />
+    <link
+      rel="canonical"
+      href={`https://${import.meta.env.URL}/posts/${frontmatter.slug}`}
+    />
+    <meta property="og:title" content={frontmatter.title} />
+    <meta property="og:type" content="article" />
+    <meta
+      property="og:url"
+      content={`https://${import.meta.env.URL}/posts/${frontmatter.slug}`}
+    />
+    <meta property="og:description" content={frontmatter.description} />
+    <meta property="og:image" content={frontmatter.image.url} />
+    <meta name="keywords" content={frontmatter.tags} />
+    <meta name="author" content={frontmatter.author} />
+  </head>
+  <body class="min-h-screen flex flex-col">
+    <Navbar />
+
+    <main class="flex-1 flex flex-col items-center justify-start">
+      <h1
+        class="text-3xl lg:text-4xl xl:text-6xl font-creative text-center text-shadow-bottom-white my-7"
+      >
+        {frontmatter.title}
+      </h1>
+
+      <p class="text-gray-400 text-xl italic text-center">
+        {datePost.getDate()}/{datePost.getMonth() + 1}/{datePost.getFullYear()}
+      </p>
+
+      <div class="flex justify-center my-3 flex-wrap">
+        {
+          frontmatter.tags?.map((tag: string) => (
+            <a
+              href={`/tags/${tag}`}
+              class="bg-pink text-black mx-1 text-sm px-3 py-1 rounded-full"
+            >
+              {tag}
+            </a>
+          ))
+        }
+      </div>
+
+      <div
+        class="border-2 text-text text-lg xl:text-xl p-5 rounded-4xl mx-2 sm:mx-7 md:mx-10 xl:mx-56 my-10 break-words tracking-wide"
+      >
+        <slot />
+      </div>
+    </main>
+    <div class="h-1/4 mb-6">
+      <Footer />
+    </div>
+  </body>
+</html>
+
+<style>
+  html,
+  body {
+    margin: 0;
+    width: 100%;
+    min-height: 100vh;
+  }
+
+  body {
+    background: radial-gradient(
+      125% 125% at 50% 90%,
+      #6f00ff 10%,
+      #3b0270 100%
+    );
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+</style>

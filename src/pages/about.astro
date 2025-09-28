@@ -5,7 +5,12 @@ import Footer from "../components/Footer.astro";
 import AboutComponent from "../components/AboutComponent.astro";
 ---
 
-<Layout>
+<Layout
+  title="À propos"
+  description={import.meta.env.DESCRIPTION}
+  url="/about"
+  index="index, follow"
+>
   <div class="h-screen">
     <div class="h-1/4">
       <Navbar />

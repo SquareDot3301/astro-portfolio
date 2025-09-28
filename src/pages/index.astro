@@ -5,8 +5,13 @@ import Layout from "../layouts/Layout.astro";
 import Footer from "../components/Footer.astro";
 ---
 
-<Layout>
-  <div class="h-screen">
+<Layout
+  title="Accueil"
+  description={import.meta.env.DESCRIPTION}
+  url="/"
+  index="index, follow"
+>
+  <div class="h-screen animate-fadein visited:animate-none">
     <div class="h-1/4"><Navbar /></div>
     <div class="h-2/4">
       <Welcome />
