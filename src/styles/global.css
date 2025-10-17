@@ -16,6 +16,15 @@
   font-display: swap;
 }
 
+hr {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.linkblog {
+  color: #e9b3fb;
+}
+
 @theme inline {
   --font-sans: "HurmitNerdFont", "sans-serif";
   --font-creative: "Xerochasy", "sans-serif";

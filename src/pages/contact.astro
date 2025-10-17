@@ -1,0 +1,60 @@
+---
+import Navbar from "../components/Navbar.astro";
+import Layout from "../layouts/Layout.astro";
+import Footer from "../components/Footer.astro";
+
+import { Image } from "astro:assets";
+import blueskyLogo from "../assets/bluesky.png";
+import mastodonLogo from "../assets/mastodon.svg";
+import instagramLogo from "../assets/instagram.svg";
+---
+
+<Layout
+  title="Contactez-moi"
+  description={import.meta.env.DESCRIPTION}
+  url="/contact"
+  index="index"
+>
+  <div class="h-screen">
+    <div class="h-1/4">
+      <Navbar />
+    </div>
+    <div class="h-2/4 flex flex-1 flex-col justify-center items-center">
+      <h1 class="text-text text-3xl lg:text-6xl font-creative">
+        Contactez-moi
+      </h1>
+      <p class="text-text text-xl lg:text-4xl text-center">
+        sur mes principaux réseaux
+      </p>
+      <div class="flex items-center my-5">
+        <a href="https://bsky.app/profile/richalguemei.fr" target="_blank">
+          <Image
+            src={blueskyLogo}
+            alt={"BlueSky Logo"}
+            class="h-24 w-24"
+            loading={"eager"}
+          />
+        </a>
+        <a href="https://mastodon.social/@richalguemei" target="_blank">
+          <Image
+            src={mastodonLogo}
+            alt={"Mastodon Logo"}
+            class="h-14 w-14 mr-4"
+            loading={"eager"}
+          />
+        </a>
+        <a href="https://www.instagram.com/richalguemei/" target="_blank">
+          <Image
+            src={instagramLogo}
+            alt={"Instagram Logo"}
+            class="h-14 w-14"
+            loading={"eager"}
+          />
+        </a>
+      </div>
+    </div>
+    <div class="h-1/4">
+      <Footer />
+    </div>
+  </div>
+</Layout>
