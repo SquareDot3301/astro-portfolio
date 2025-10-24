@@ -6,7 +6,7 @@ description: "Un petit poème du matin !"
 author: "Richalgue Mei"
 slug: "poesie-brouillard"
 image:
-  url: "https://docs.astro.build/assets/rose.webp"
+  url: "/banniere.png"
   alt: "The Astro logo on a dark background with a pink glow."
 tags: ["poésie", "écriture"]
 ---
