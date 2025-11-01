@@ -1,4 +1,6 @@
 ---
+export const prerender = false; // désactive la génération statique
+
 import Navbar from "../components/Navbar.astro";
 import Layout from "../layouts/Layout.astro";
 import Footer from "../components/Footer.astro";
@@ -7,12 +9,24 @@ const allPosts = Object.values(
   import.meta.glob("./posts/*.md", { eager: true })
 ) as any[];
 
-// Tri décroissant sur la date
+// Tri décroissant
 const sortedPosts = allPosts.sort(
   (a, b) =>
     new Date(b.frontmatter.pubDate).getTime() -
     new Date(a.frontmatter.pubDate).getTime()
 );
+
+// Récupération du paramètre de page (ex: ?page=2)
+const url = new URL(Astro.request.url);
+const currentPage = Number(url.searchParams.get("page")) || 1;
+const postsPerPage = 5;
+
+// Calcul des indices
+const start = (currentPage - 1) * postsPerPage;
+const end = start + postsPerPage;
+const paginatedPosts = sortedPosts.slice(start, end);
+
+const totalPages = Math.ceil(sortedPosts.length / postsPerPage);
 ---
 
 <Layout
@@ -25,7 +39,7 @@ const sortedPosts = allPosts.sort(
     <div class="h-20"><Navbar /></div>
     <main class="flex-1 flex flex-col items-center justify-center">
       {
-        sortedPosts.map((post) => (
+        paginatedPosts.map((post) => (
           <div class="my-4">
             <a
               class="relative font-bold group px-2 text-text text-xl lg:text-3xl"
@@ -37,6 +51,26 @@ const sortedPosts = allPosts.sort(
           </div>
         ))
       }
+
+      <div
+        class="mt-8 flex gap-4 font-bold group px-2 text-text text-xl lg:text-3xl"
+      >
+        {
+          currentPage > 1 && (
+            <a class="" href={`/blog?page=${currentPage - 1}`}>
+              &larr; Précédent
+            </a>
+          )
+        }
+
+        <span>Page {currentPage} sur {totalPages}</span>
+
+        {
+          currentPage < totalPages && (
+            <a href={`/blog?page=${currentPage + 1}`}>Suivant &rarr;</a>
+          )
+        }
+      </div>
     </main>
     <div class="h-20"><Footer /></div>
   </div>

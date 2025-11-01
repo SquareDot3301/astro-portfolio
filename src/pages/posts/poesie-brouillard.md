@@ -7,7 +7,7 @@ author: "Richalgue Mei"
 slug: "poesie-brouillard"
 image:
   url: "/banniere.png"
-  alt: "The Astro logo on a dark background with a pink glow."
+  alt: "La bannière de Richalgue Mei"
 tags: ["poésie", "écriture"]
 ---
 

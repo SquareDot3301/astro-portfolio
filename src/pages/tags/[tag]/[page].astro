@@ -1,0 +1,123 @@
+---
+import Footer from "../../../components/Footer.astro";
+import Layout from "../../../layouts/Layout.astro";
+import Navbar from "../../../components/Navbar.astro";
+
+export async function getStaticPaths() {
+  const allPosts = Object.values(
+    import.meta.glob("../../posts/*.md", { eager: true })
+  ) as any[];
+
+  const uniqueTags = [
+    ...new Set(allPosts.flatMap((post) => post.frontmatter.tags || [])),
+  ];
+
+  const paths = [];
+
+  for (const tag of uniqueTags) {
+    const filteredPosts = allPosts.filter((post: any) =>
+      (post.frontmatter.tags || []).includes(tag)
+    );
+
+    const postsPerPage = 5;
+    const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
+
+    for (let page = 1; page <= totalPages; page++) {
+      paths.push({
+        params: {
+          tag, // ✅ plus d'encodage ici
+          page: page.toString(),
+        },
+        props: {
+          tag,
+          posts: filteredPosts,
+          currentPage: page,
+          totalPages,
+        },
+      });
+    }
+  }
+
+  console.log(
+    "🪵 Paths générés :",
+    paths.map((p) => p.params)
+  );
+
+  return paths;
+}
+
+const { tag, posts, currentPage, totalPages } = Astro.props;
+
+const sortedPosts = posts.sort(
+  (a: any, b: any) =>
+    new Date(b.frontmatter.pubDate).getTime() -
+    new Date(a.frontmatter.pubDate).getTime()
+);
+
+const postsPerPage = 3;
+const start = (currentPage - 1) * postsPerPage;
+const end = start + postsPerPage;
+const paginatedPosts = sortedPosts.slice(start, end);
+---
+
+<Layout
+  title={`Tag : ${tag}`}
+  description={`Articles avec le tag ${tag}`}
+  url={`/tags/${encodeURIComponent(tag)}`}
+  index="index, follow"
+>
+  <div class="min-h-screen flex flex-col">
+    <div class="h-20"><Navbar /></div>
+    <main class="flex-1 flex flex-col items-center justify-center mt-10">
+      <h1
+        class="text-black text-shadow-bottom-white text-3xl sm:text-4xl lg:text-6xl text-center mb-10"
+      >
+        #{tag}
+      </h1>
+
+      {
+        paginatedPosts.map((post: any) => (
+          <div class="my-4">
+            <a
+              class="relative font-bold group px-2 text-text text-xl lg:text-3xl"
+              href={post.url}
+            >
+              - {post.frontmatter.title}
+              <span class="absolute left-0 -bottom-1 h-1 w-0 bg-pink transition-all duration-300 group-hover:w-full" />
+            </a>
+          </div>
+        ))
+      }
+
+      <div
+        class="mt-8 flex gap-4 font-bold group px-2 text-text text-xl lg:text-3xl"
+      >
+        {
+          currentPage > 1 && (
+            <a href={`/tags/${encodeURIComponent(tag)}/${currentPage - 1}`}>
+              &larr; Précédent
+            </a>
+          )
+        }
+
+        <span>Page {currentPage} sur {totalPages}</span>
+
+        {
+          currentPage < totalPages && (
+            <a href={`/tags/${encodeURIComponent(tag)}/${currentPage + 1}`}>
+              Suivant &rarr;
+            </a>
+          )
+        }
+      </div>
+
+      <a
+        class="p-2 sm:p-3 md:p-5 mt-10 bg-text rounded-4xl text-xl lg:text-3xl duration-200 hover:bg-pink"
+        href="/blog"
+      >
+        Retour au blog
+      </a>
+    </main>
+    <div class="h-20"><Footer /></div>
+  </div>
+</Layout>

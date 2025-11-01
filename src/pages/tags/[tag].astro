@@ -1,74 +1,19 @@
 ---
-import Footer from "../../components/Footer.astro";
-import Layout from "../../layouts/Layout.astro";
-import Navbar from "../../components/Navbar.astro";
-
 export async function getStaticPaths() {
   const allPosts = Object.values(
     import.meta.glob("../posts/*.md", { eager: true })
-  );
+  ) as any[];
 
   const uniqueTags = [
-    ...new Set(allPosts.map((post: any) => post.frontmatter.tags).flat()),
+    ...new Set(allPosts.flatMap((post) => post.frontmatter.tags || [])),
   ];
 
-  return uniqueTags.map((tag) => {
-    const filteredPosts = allPosts.filter((post: any) =>
-      post.frontmatter.tags.includes(tag)
-    );
-    return {
-      params: { tag },
-      props: { posts: filteredPosts },
-    };
-  });
+  return uniqueTags.map((tag) => ({
+    params: { tag },
+  }));
 }
 
 const { tag } = Astro.params;
-const { posts } = Astro.props;
 
-const sortedPosts = posts.sort(
-  (a: any, b: any) =>
-    new Date(b.frontmatter.pubDate).getTime() -
-    new Date(a.frontmatter.pubDate).getTime()
-);
+Astro.redirect(`/tags/${encodeURIComponent(tag)}/1`);
 ---
-
-<Layout
-  title="Tags"
-  description={import.meta.env.DESCRIPTION}
-  url="/about"
-  index="index, follow"
->
-  <div class="h-screen">
-    <div class="h-1/4"><Navbar /></div>
-    <div class="h-2/4">
-      <h1
-        class="text-black text-shadow-bottom-white text-3xl sm:text-4xl lg:text-6xl text-center mb-10"
-      >
-        #{tag}
-      </h1>
-      <div class="flex-1 flex flex-col items-center justify-center">
-        {
-          sortedPosts.map((post: any) => (
-            <div class="my-4">
-              <a
-                class="relative font-bold group px-2 text-text text-xl lg:text-3xl"
-                href={post.url}
-              >
-                - {post.frontmatter.title}
-                <span class="absolute left-0 -bottom-1 h-1 w-0 bg-pink transition-all duration-300 group-hover:w-full" />
-              </a>
-            </div>
-          ))
-        }
-        <a
-          class="p-2 sm:p-3 md:p-5 mt-10 bg-text rounded-4xl text-xl lg:text-3xl font-sans duration-200 hover:bg-pink"
-          href="/blog">Retour au blog</a
-        >
-      </div>
-    </div>
-    <div class="h-1/4">
-      <Footer />
-    </div>
-  </div>
-</Layout>

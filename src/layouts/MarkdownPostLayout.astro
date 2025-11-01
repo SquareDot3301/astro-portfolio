@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import "../styles/MarkdownPostLayout.css";
 const { frontmatter } = Astro.props;
 import Navbar from "../components/Navbar.astro";
 import Footer from "../components/Footer.astro";
@@ -52,7 +53,7 @@ const datePost = new Date(frontmatter.pubDate);
         {
           frontmatter.tags?.map((tag: string) => (
             <a
-              href={`/tags/${tag}`}
+              href={`/tags/${encodeURIComponent(tag)}/1`}
               class="bg-pink text-black mx-1 text-sm px-3 py-1 rounded-full"
             >
               {tag}
@@ -65,6 +66,14 @@ const datePost = new Date(frontmatter.pubDate);
         class="border-2 text-text text-lg xl:text-xl p-5 rounded-4xl mx-2 sm:mx-7 md:mx-10 xl:mx-56 my-10 break-words tracking-wide"
       >
         <slot />
+        <div class="mt-5 text-center">
+          <a class="relative font-bold group px-2 text-text" href="/rss.xml">
+            Retrouvez ce post sur mon feed RSS !
+            <span
+              class="absolute left-0 -bottom-1 h-1 w-0 bg-pink transition-all duration-300 group-hover:w-full"
+            ></span>
+          </a>
+        </div>
       </div>
     </main>
     <div class="h-1/4 mb-6">
