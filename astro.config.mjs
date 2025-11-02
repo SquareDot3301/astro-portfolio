@@ -7,10 +7,16 @@ import tailwindcss from "@tailwindcss/vite";
 
 import node from "@astrojs/node";
 
+import sitemap from "@astrojs/sitemap";
+
+import robots from "astro-robots";
+
+import metaTags from "astro-meta-tags";
+
 // https://astro.build/config
 export default defineConfig({
-  site: "http://richalguemei.fr",
-  integrations: [react()],
+  site: "https://richalguemei.fr",
+  integrations: [react(), sitemap(), robots(), metaTags()],
   server: { allowedHosts: ["richalguemei.fr"] },
 
   vite: {
