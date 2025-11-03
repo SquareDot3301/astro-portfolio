@@ -24,7 +24,7 @@ export default defineConfig({
     robots(),
     metaTags(),
     jopSoftwarematomo({
-      baseUrl: "http://richalguemei.fr/matomo/",
+      baseUrl: "https://richalguemei.fr/matomo/",
       siteId: 1,
     }),
   ],
