@@ -7,25 +7,47 @@ const { title, description, url, index } = Astro.props;
 <!doctype html>
 <html lang="fr">
   <head>
+    <!-- Meta Basique -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/avatar-bg.svg" />
     <meta name="generator" content="Astro" />
-    <title>{`${import.meta.env.WEBSITE} | ${title}`}</title>
+    <title>{`Richalgue Mëi | ${title}`}</title>
     <link rel="me" href="https://mastodon.social/@richalguemei" />
     <meta name="description" content={description} />
+    <meta
+      name="robots"
+      content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
+    />
     <meta name="googlebot-news" content={index} />
-    <link rel="canonical" href={`https://${import.meta.env.URL}${url}`} />
+    <link rel="canonical" href={`https://www.${import.meta.env.URL}${url}`} />
+    <meta
+      name="keywords"
+      content="portfolio, blog, bonheur, article, écriture, auteur, poème, poésie"
+    />
+    <meta name="author" content="Richalgue Mëi" />
+    <meta name="application-name" content="Richalgue Mëi" />
+    <meta name="apple-mobile-web-app-title" content="Richalgue Mëi" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Richalgue Mëi" />
+    <meta name="theme-color" content="#3b0270" />
+    <!-- Meta Réseaux sociaux -->
     <meta
       property="og:title"
       content={`${import.meta.env.WEBSITE} | ${title}`}
     />
-    <meta property="og:type" content="" />
-    <meta property="og:url" content={`https://${import.meta.env.URL}${url}`} />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content={`https://www.${import.meta.env.URL}${url}`}
+    />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={`/banniere.png`} />
-    <meta name="keywords" content="web, portfolio, auteur, meditation" />
-    <meta name="author" content="Richalgue Mëi" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="628" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:site_name" content="Richalgue Mëi" />
   </head>
   <body class="min-h-screen flex flex-col">
     <slot />

@@ -27,11 +27,15 @@ const end = start + postsPerPage;
 const paginatedPosts = sortedPosts.slice(start, end);
 
 const totalPages = Math.ceil(sortedPosts.length / postsPerPage);
+
+const description = `Retrouvez ici mes billets de blog. 
+Que ce soit des petits poèmes, mes analyses parfois bancales, ou des articles plus développés, 
+ne manquez pas votre chance de trouver la perle rare à travers mes écrits !`;
 ---
 
 <Layout
   title="Mon Blog"
-  description={import.meta.env.DESCRIPTION}
+  description={description}
   url="/blog"
   index="index, follow"
 >

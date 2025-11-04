@@ -3,11 +3,15 @@ import Navbar from "../components/Navbar.astro";
 import Layout from "../layouts/Layout.astro";
 import Footer from "../components/Footer.astro";
 import AboutComponent from "../components/AboutComponent.astro";
+
+const description = `Page "À Propos" de Richalgue Mëi. 
+Retrouvez ici tout ce qui me façonne : écriture, développement et plaisirs simples : 
+voici ce qui me suffit à vivre au quotidien !`;
 ---
 
 <Layout
   title="À propos"
-  description={import.meta.env.DESCRIPTION}
+  description={description}
   url="/about"
   index="index, follow"
 >

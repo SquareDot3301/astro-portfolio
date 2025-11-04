@@ -18,22 +18,34 @@ const datePost = new Date(frontmatter.pubDate);
     <link rel="me" href="https://mastodon.social/@richalguemei" />
     <meta name="fediverse:creator" content="@richalguemei@mastodon.social" />
     <meta name="description" content={frontmatter.description} />
+    <meta
+      name="robots"
+      content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
+    />
     <meta name="googlebot-news" content="index, follow" />
+    <meta name="author" content={frontmatter.author} />
+    <meta name="application-name" content="Richalgue Mëi" />
+    <meta name="apple-mobile-web-app-title" content="Richalgue Mëi" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Richalgue Mëi" />
+    <meta name="theme-color" content="#3b0270" />
     <link
       rel="canonical"
-      href={`https://${import.meta.env.URL}/posts/${frontmatter.slug}`}
+      href={`https://www.${import.meta.env.URL}/posts/${frontmatter.slug}`}
     />
     <meta property="og:title" content={frontmatter.title} />
     <meta property="og:type" content="article" />
     <meta
       property="og:url"
-      content={`https://${import.meta.env.URL}/posts/${frontmatter.slug}`}
+      content={`https://www.${import.meta.env.URL}/posts/${frontmatter.slug}`}
     />
     <meta property="og:description" content={frontmatter.description} />
     <meta property="og:image" content={frontmatter.image.url} />
     <meta name="keywords" content={frontmatter.tags} />
-    <meta name="author" content={frontmatter.author} />
     <meta name="fediverse:creator" content="@richalguemei@mastodon.social" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:site_name" content="Richalgue Mëi" />
   </head>
   <body class="min-h-screen flex flex-col">
     <Navbar />
