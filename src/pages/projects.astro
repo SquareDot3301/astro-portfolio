@@ -1,0 +1,114 @@
+---
+import Navbar from "../components/Navbar.astro";
+import Layout from "../layouts/Layout.astro";
+import Footer from "../components/Footer.astro";
+
+import { Image } from "astro:assets";
+import quetzerLogo from "../assets/quetzer-banner.png";
+import feuilleFiguier from "../assets/feuille-figuier.png";
+
+const description = `Bienvenue sur ma page Projets ! Ici vous pouvez retrouver mes projets les plus intéressants,
+                    ce qui se passe dans ma vie, dans mon petit quotidien ! Si vous avez des questions n'hésitez
+                    pas à passer par la page contact !`;
+---
+
+<Layout
+  title="Mes Projets"
+  description={description}
+  url="/projects"
+  index="index, follow"
+>
+  <div class="h-screen">
+    <div class="h-1/4">
+      <Navbar />
+    </div>
+    <div class="flex-grow flex flex-col justify-center items-center py-10">
+      <div
+        class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 content-center bg-white p-3 rounded-xl font-sans mx-2 sm:mx-7 md:mx-10 xl:mx-24 mb-4"
+      >
+        <div>
+          <h2 class="font-creative text-3xl text-center my-2">Quetzer :</h2>
+          <Image
+            src={quetzerLogo}
+            class="h-44 w-44 rounded-4xl"
+            alt="Logo de Quetzer"
+          />
+          <div class="break-words mx-auto mt-5 w-11/12 md:w-5/6">
+            <p>
+              Dans une ultime tentative de remettre le blogging au goût du jour,
+              j'ai développé "Quetzer" : une plate-forme de blogging centralisée
+              sur laquelle n'importe qui pourrait venir publier et se faire
+              connaître. (Bon en gros, j'ai voulu refaire Blogger oui...). Mais
+              l'idée aurait été de permettre à chacun d'héberger sa propre
+              instance de Quetzer afin d'avoir le contrôle entier de ses
+              données. Ça n'est pas encore tout à fait possible mais... restez
+              branchés !
+            </p>
+          </div>
+
+          <h3 class="font-creative text-2xl text-center my-4">Liens :</h3>
+          <div
+            class="grid grid-cols-1 sm:grid-cols-2 2xl:grid-cols-3 gap-4 mx-auto text-center w-11/12 md:w-3/4"
+          >
+            <a href="https://github.com/quetzer-land/website" target="_blank">
+              <p class="p-2 bg-pink rounded-3xl text-sm sm:text-base">
+                Front-end
+              </p>
+            </a>
+            <a href="https://github.com/quetzer-land/API" target="_blank">
+              <p class="p-2 bg-pink rounded-3xl text-sm sm:text-base">
+                Back-end
+              </p>
+            </a>
+            <a href="https://github.com/quetzer-land" target="_blank">
+              <p class="p-2 bg-pink rounded-3xl text-sm sm:text-base">Github</p>
+            </a>
+          </div>
+        </div>
+        <div></div>
+        <div class="">
+          <h2 class="font-creative text-3xl text-center my-2">
+            Feuille De Figuier :
+          </h2>
+          <Image
+            src={feuilleFiguier}
+            class="h-44 w-44 rounded-4xl"
+            alt="Logo de Quetzer"
+          />
+          <div class="break-words mx-auto mt-5 w-11/12 md:w-5/6">
+            <p>
+              Une histoire de tourisme dans un arbre, le long de nervures de
+              feuilles de figuier. Ça vous tente ? C'est le speech du roman que
+              (j'essaie) d'écrire en ce moment. Je m'amuse beaucoup sur ce
+              projet. Je ne sais pas si mon bouquin aura une quelconque valeur
+              littéraire, mais j'aurais au moins kiffé l'écrire ! Et c'est le
+              principal !
+            </p>
+          </div>
+
+          <h3 class="font-creative text-2xl text-center my-4">Liens :</h3>
+          <div
+            class="grid grid-cols-1 sm:grid-cols-2 2xl:grid-cols-3 gap-4 mx-auto text-center w-11/12 md:w-3/4"
+          >
+            <a href="" target="_blank">
+              <p class="p-2 bg-pink rounded-3xl text-sm sm:text-base">
+                Patiente
+              </p>
+            </a>
+            <a href="" target="_blank">
+              <p class="p-2 bg-pink rounded-3xl text-sm sm:text-base">Un peu</p>
+            </a>
+            <a href="" target="_blank">
+              <p class="p-2 bg-pink rounded-3xl text-sm sm:text-base">
+                Plus...
+              </p>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="h-1/4">
+      <Footer />
+    </div>
+  </div>
+</Layout>
