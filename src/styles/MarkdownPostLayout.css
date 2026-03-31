@@ -23,6 +23,8 @@ li {
 p {
   letter-spacing: 1px;
   line-height: 35px;
+  padding-bottom: 10px;
+  padding-top: 10px;
 }
 
 td,
@@ -55,4 +57,56 @@ strong {
 li {
   list-style-type: disc;
   margin-left: 60px;
+}
+
+.test a {
+  color: #e9b3fb;
+  text-decoration: underline;
+  padding-bottom: 3px;
+  padding-top: 3px;
+}
+.test a:hover {
+  color: #9c4fb6;
+}
+
+.test h2,
+h3 {
+  font-size: xx-large;
+  font-weight: bold;
+  margin-left: 20px;
+  padding-bottom: 15px;
+  padding-top: 15px;
+}
+
+.test blockquote {
+  margin: 1.5rem 0;
+  padding: 1rem 1rem;
+  border-left: 4px solid #e9b3fb;
+  background: rgba(255, 255, 255, 0.05);
+  font-style: italic;
+  color: #e5e5e5;
+  border-radius: 8px;
+  list-style: none;
+}
+
+.test ul {
+  margin: 1.5rem 0;
+  padding-left: 1.5rem;
+}
+
+.test li {
+  position: relative;
+  margin: 0.6rem 0;
+  padding-left: 1.2rem;
+  list-style: none;
+  line-height: 1.6;
+  color: #e5e5e5;
+}
+
+.test li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #e9b3fb;
+  font-size: 1.2rem;
 }
