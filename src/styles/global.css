@@ -32,14 +32,14 @@ hr {
   --color-blue: #6f00ff;
   --color-pink: #e9b3fb;
   --color-text: #fff1f1;
-  --text-shadow-bottom-white: 1px 1px 1px #fff1f1, 1px 2px 1px #fff1f1,
-    1px 3px 1px #fff1f1, 1px 4px 1px #fff1f1, 1px 5px 1px #fff1f1,
-    1px 6px 1px #fff1f1, 1px 7px 1px #fff1f1, 1px 8px 1px #fff1f1,
-    1px 9px 1px #fff1f1, 1px 10px 1px #fff1f1, 1px 11px 1px #fff1f1,
-    1px 12px 1px #fff1f1, 1px 13px 1px #fff1f1, 1px 14px 1px #fff1f1,
-    1px 15px 1px #fff1f1, 1px 16px 1px #fff1f1, 1px 17px 1px #fff1f1,
-    1px 18px 1px #fff1f1, 1px 18px 1px #fff1f1, 1px 19px 1px #fff1f1,
-    1px 20px 1px #fff1f1;
+  --text-shadow-bottom-white:
+    1px 1px 1px #fff1f1, 1px 2px 1px #fff1f1, 1px 3px 1px #fff1f1,
+    1px 4px 1px #fff1f1, 1px 5px 1px #fff1f1, 1px 6px 1px #fff1f1,
+    1px 7px 1px #fff1f1, 1px 8px 1px #fff1f1, 1px 9px 1px #fff1f1,
+    1px 10px 1px #fff1f1, 1px 11px 1px #fff1f1, 1px 12px 1px #fff1f1,
+    1px 13px 1px #fff1f1, 1px 14px 1px #fff1f1, 1px 15px 1px #fff1f1,
+    1px 16px 1px #fff1f1, 1px 17px 1px #fff1f1, 1px 18px 1px #fff1f1,
+    1px 18px 1px #fff1f1, 1px 19px 1px #fff1f1, 1px 20px 1px #fff1f1;
 
   --animate-fadein: fadein 1s ease-out forwards;
   @keyframes fadein {

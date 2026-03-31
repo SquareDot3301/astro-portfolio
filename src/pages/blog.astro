@@ -1,32 +1,27 @@
 ---
-export const prerender = false; // désactive la génération statique
+export const prerender = false;
 
 import Navbar from "../components/Navbar.astro";
 import Layout from "../layouts/Layout.astro";
 import Footer from "../components/Footer.astro";
 
-const allPosts = Object.values(
-  import.meta.glob("./posts/*.md", { eager: true })
-) as any[];
-
-// Tri décroissant
-const sortedPosts = allPosts.sort(
-  (a, b) =>
-    new Date(b.frontmatter.pubDate).getTime() -
-    new Date(a.frontmatter.pubDate).getTime()
-);
-
-// Récupération du paramètre de page (ex: ?page=2)
+// Page courante
 const url = new URL(Astro.request.url);
 const currentPage = Number(url.searchParams.get("page")) || 1;
-const postsPerPage = 5;
 
-// Calcul des indices
-const start = (currentPage - 1) * postsPerPage;
-const end = start + postsPerPage;
-const paginatedPosts = sortedPosts.slice(start, end);
+// Appel API
+const baseUrl = import.meta.env.PROD
+  ? "https://richalguemei.fr"
+  : "http://localhost:4000";
+const res = await fetch(
+  `https://richalguemei.fr/api/posts?page=${currentPage}`,
+);
 
-const totalPages = Math.ceil(sortedPosts.length / postsPerPage);
+if (!res.ok) {
+  throw new Error("Impossible de récupérer les articles");
+}
+
+const { posts, totalPages } = await res.json();
 
 const description = `Retrouvez ici mes billets de blog. 
 Que ce soit des petits poèmes, mes analyses parfois bancales, ou des articles plus développés, 
@@ -41,33 +36,38 @@ ne manquez pas votre chance de trouver la perle rare à travers mes écrits !`;
 >
   <div class="min-h-screen flex flex-col">
     <div class="h-20"><Navbar /></div>
+
     <main class="flex-1 flex flex-col items-center justify-center">
       {
-        paginatedPosts.map((post) => (
+        posts.length === 0 && (
+          <p class="text-text text-xl mt-8">Aucun article pour le moment.</p>
+        )
+      }
+
+      {
+        posts.map((post: any) => (
           <div class="my-4">
             <a
               class="relative font-bold group px-2 text-text text-xl lg:text-3xl"
-              href={post.url}
+              href={`/blog/${post.slug}`}
             >
-              - {post.frontmatter.title}
+              - {post.title}
               <span class="absolute left-0 -bottom-1 h-1 w-0 bg-pink transition-all duration-300 group-hover:w-full" />
             </a>
           </div>
         ))
       }
 
-      <div
-        class="mt-8 flex gap-4 font-bold group px-2 text-text text-xl lg:text-3xl"
-      >
+      <div class="mt-8 flex gap-6 font-bold px-2 text-text text-xl lg:text-3xl">
         {
           currentPage > 1 && (
-            <a class="" href={`/blog?page=${currentPage - 1}`}>
-              &larr; Précédent
-            </a>
+            <a href={`/blog?page=${currentPage - 1}`}>&larr; Précédent</a>
           )
         }
 
-        <span>Page {currentPage} sur {totalPages}</span>
+        <span>
+          Page {currentPage} sur {totalPages}
+        </span>
 
         {
           currentPage < totalPages && (
@@ -76,6 +76,7 @@ ne manquez pas votre chance de trouver la perle rare à travers mes écrits !`;
         }
       </div>
     </main>
+
     <div class="h-20"><Footer /></div>
   </div>
 </Layout>

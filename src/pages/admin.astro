@@ -1,0 +1,243 @@
+---
+export const prerender = false;
+
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<Layout title="Admin — Publier un article" index="noindex, nofollow">
+  <div class="min-h-screen flex flex-col">
+    <Navbar />
+
+    <main class="flex-1 flex flex-col items-center px-4">
+      <h1 class="text-3xl font-bold my-6 text-white">Nouvel article</h1>
+
+      <!-- FORMULAIRE DE CRÉATION -->
+      <form
+        id="postForm"
+        class="w-full max-w-3xl flex flex-col gap-4 text-white"
+      >
+        <input
+          id="title"
+          type="text"
+          placeholder="Titre"
+          class="p-3 rounded"
+          autocomplete="off"
+          required
+        />
+
+        <div class="">
+          <!-- Éditeur -->
+          <textarea
+            id="content"
+            class="w-full h-96 p-4 rounded-xl text-white font-mono mb-5"
+            placeholder="Écris ton article en Markdown ici..."
+            autocomplete="off"></textarea>
+
+          <!-- Preview -->
+          <div id="preview" class="prose prose-invert max-w-none"></div>
+        </div>
+
+        <input
+          id="token"
+          type="password"
+          placeholder="Token admin"
+          class="p-3 rounded"
+          required
+        />
+
+        <button type="submit" class="bg-pink text-black font-bold py-3 rounded">
+          Publier
+        </button>
+      </form>
+
+      <p id="status" class="mt-4 text-lg"></p>
+
+      <!-- LISTE DES ARTICLES -->
+      <h2 class="text-2xl font-bold mt-12 mb-4 text-white">
+        Articles existants
+      </h2>
+
+      <ul id="postsList" class="w-full max-w-3xl text-white"></ul>
+    </main>
+
+    <Footer />
+  </div>
+</Layout>
+
+<script>
+  import { marked } from "marked";
+
+  const form = document.getElementById("postForm");
+  const titleInput = document.getElementById("title");
+  const contentInput = document.getElementById("content");
+  const tokenInput = document.getElementById("token");
+  const status = document.getElementById("status");
+  const postsList = document.getElementById("postsList");
+
+  if (
+    !form ||
+    !titleInput ||
+    !contentInput ||
+    !tokenInput ||
+    !status ||
+    !postsList
+  ) {
+    throw new Error("Admin DOM elements missing");
+  }
+
+  if (
+    !(form instanceof HTMLFormElement) ||
+    !(titleInput instanceof HTMLInputElement) ||
+    !(contentInput instanceof HTMLTextAreaElement) ||
+    !(tokenInput instanceof HTMLInputElement) ||
+    !(status instanceof HTMLParagraphElement) ||
+    !(postsList instanceof HTMLUListElement)
+  )
+    throw new Error("Type des éléments incorrect");
+  /* --------------------
+     CRÉATION D’ARTICLE
+  -------------------- */
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    if (
+      !(titleInput instanceof HTMLInputElement) ||
+      !(contentInput instanceof HTMLTextAreaElement) ||
+      !(tokenInput instanceof HTMLInputElement) ||
+      !(form instanceof HTMLFormElement)
+    ) {
+      return;
+    }
+
+    status.textContent = "Publication en cours…";
+
+    try {
+      const res = await fetch("https://richalguemei.fr/api/posts", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${tokenInput.value}`,
+        },
+        body: JSON.stringify({
+          title: titleInput.value,
+          content: contentInput.value,
+        }),
+      });
+
+      if (!res.ok) throw new Error();
+
+      status.textContent = "✅ Article publié";
+      form.reset();
+      await loadPosts();
+    } catch {
+      status.textContent = "❌ Erreur de publication";
+    }
+  });
+
+  /* --------------------
+     CHARGEMENT DES POSTS
+  -------------------- */
+  async function loadPosts() {
+    if (!(tokenInput instanceof HTMLInputElement)) return;
+
+    if (postsList == null) {
+      return;
+    }
+
+    postsList.innerHTML = "<li class='text-gray-400'>Chargement…</li>";
+
+    try {
+      const res = await fetch("https://richalguemei.fr/api/posts?page=1", {
+        headers: {
+          Authorization: `Bearer ${tokenInput.value}`,
+        },
+      });
+
+      if (!res.ok) throw new Error();
+
+      const { posts } = await res.json(); // 👈 COMME SUR /blog
+
+      postsList.innerHTML = "";
+
+      if (posts.length === 0) {
+        postsList.innerHTML = "<li>Aucun article</li>";
+        return;
+      }
+
+      for (const post of posts) {
+        const li = document.createElement("li");
+        li.className =
+          "flex justify-between items-center border-b border-gray-600 py-3";
+
+        li.innerHTML = `
+        <span>${post.title}</span>
+        <button data-id="${post.id}" class="text-red-400 hover:underline">
+          Supprimer
+        </button>
+      `;
+
+        postsList.appendChild(li);
+      }
+    } catch (err) {
+      console.error(err);
+      postsList.innerHTML = "<li>Erreur de chargement</li>";
+    }
+  }
+
+  /* --------------------
+     SUPPRESSION
+  -------------------- */
+  postsList.addEventListener("click", async (e) => {
+    const target = e.target;
+
+    if (!(target instanceof HTMLElement)) return;
+
+    const btn = target.closest("button[data-id]");
+    if (!(btn instanceof HTMLButtonElement)) return;
+
+    const id = btn.dataset.id;
+    if (!id) return;
+
+    console.log(id);
+
+    if (!confirm("Supprimer définitivement cet article ?")) return;
+
+    try {
+      const res = await fetch(`https://richalguemei.fr/api/posts/${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${tokenInput.value}`,
+        },
+      });
+
+      if (!res.ok) throw new Error();
+
+      await loadPosts();
+    } catch (err) {
+      console.error(err);
+      alert("Erreur lors de la suppression");
+    }
+  });
+
+  loadPosts();
+
+  const contentMd = document.getElementById("content");
+  const preview = document.getElementById("preview");
+
+  if (
+    !(contentMd instanceof HTMLTextAreaElement) ||
+    !(preview instanceof HTMLDivElement)
+  ) {
+    throw new Error("Markdown elements missing");
+  }
+
+  // rendu initial
+  preview.innerHTML = marked.parse(contentMd.value);
+
+  // rendu en live
+  contentMd.addEventListener("input", () => {
+    preview.innerHTML = marked.parse(contentMd.value);
+  });
+</script>

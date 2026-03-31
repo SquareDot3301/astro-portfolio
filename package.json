@@ -14,6 +14,7 @@
     "@astrojs/rss": "^4.0.15",
     "@astrojs/sitemap": "^3.7.0",
     "@jop-software/astro-matomo": "^1.1.1",
+    "@tailwindcss/typography": "^0.5.19",
     "@tailwindcss/vite": "^4.1.13",
     "@types/nodemailer": "^7.0.2",
     "@types/react": "^19.1.13",
@@ -23,6 +24,7 @@
     "astro-meta-tags": "^0.4.0",
     "astro-navbar": "^2.4.0",
     "astro-robots": "^2.3.1",
+    "marked": "^17.0.3",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "tailwindcss": "^4.1.13"
